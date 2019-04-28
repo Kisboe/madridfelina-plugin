@@ -1,16 +1,16 @@
 <?php
 /**
- * WP-Reactivate
+ * MF-Press
  *
  *
- * @package   WP-Reactivate
- * @author    Pangolin
+ * @package   MF-Press
+ * @author    Kisboe
  * @license   GPL-3.0
  * @link      https://gopangolin.com
- * @copyright 2017 Pangolin (Pty) Ltd
+ * @copyright 2017 Kisboe (Pty) Ltd
  */
 
-namespace Pangolin\WPR;
+namespace Kisboe\MFR;
 
 /**
  * @subpackage Widget
@@ -56,7 +56,7 @@ class Widget extends \WP_Widget {
 
 		echo $args['before_widget'];
 
-		?><div class="wp-reactivate-widget" data-object-id="<?php echo $object_name ?>"></div><?php
+		?><div class="mfpress-widget" data-object-id="<?php echo $object_name ?>"></div><?php
 
 		echo $args['after_widget'];
 	}
@@ -72,7 +72,7 @@ class Widget extends \WP_Widget {
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>">
-				<?php esc_html_e( 'Title:', 'wp-reactivate' ); ?>
+				<?php esc_html_e( 'Title:', 'mfpress' ); ?>
 			</label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 		</p>

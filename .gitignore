@@ -1,6 +1,6 @@
-$ cat .gitignore
-# exclude node_modules 
+# exclude node_modules
 /node_modules
+package-lock.json
 
 # exclude built js
 /assets/js/*

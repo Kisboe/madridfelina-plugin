@@ -1,16 +1,16 @@
 <?php
 /**
- * WP-Reactivate
+ * MF-Press
  *
  *
- * @package   WP-Reactivate
- * @author    Pangolin
+ * @package   MF-Press
+ * @author    Kisboe
  * @license   GPL-3.0
  * @link      https://gopangolin.com
- * @copyright 2017 Pangolin (Pty) Ltd
+ * @copyright 2017 Kisboe (Pty) Ltd
  */
 
-namespace Pangolin\WPR;
+namespace Kisboe\MFR;
 
 /**
  * @subpackage Admin
@@ -161,7 +161,7 @@ class Admin {
 	 * @since    1.0.0
 	 */
 	public function display_plugin_admin_page() {
-		?><div id="wp-reactivate-admin"></div><?php
+		?><div id="mfpress-admin"></div><?php
 	}
 
 	/**

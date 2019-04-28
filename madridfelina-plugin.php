@@ -1,36 +1,36 @@
 <?php
 /**
- * WP-Reactivate
+ * MF-Press
  *
  *
- * @package   WP-Reactivate
- * @author    Pangolin
+ * @package   MF
+ * @author    Kisboe
  * @license   GPL-3.0
  * @link      https://gopangolin.com
- * @copyright 2017 Pangolin (Pty) Ltd
+ * @copyright 2017 Kisboe (Pty) Ltd
  *
  * @wordpress-plugin
- * Plugin Name:       WP-Reactivate
+ * Plugin Name:       MF
  * Plugin URI:        https://gopangolin.com
- * Description:       React boilerplate for WordPress plugins
+ * Description:       React widgets and shortcodes for MF
  * Version:           1.0.2
- * Author:            pangolin
+ * Author:            Kisboe
  * Author URI:        https://gopangolin.com
- * Text Domain:       wp-reactivate
+ * Text Domain:       mfpress
  * License:           GPL-3.0
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  * Domain Path:       /languages
  */
 
 
-namespace Pangolin\WPR;
+namespace Kisboe\MFR;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( 'WP_REACTIVATE_VERSION', '1.0.2' );
+define( 'MF_PRESS_VERSION', '1.0.0' );
 
 
 /**
@@ -81,7 +81,7 @@ function init() {
 	$wpr_admin = Admin::get_instance();
 	$wpr_rest = Endpoint\Example::get_instance();
 }
-add_action( 'plugins_loaded', 'Pangolin\\WPR\\init' );
+add_action( 'plugins_loaded', 'Kisboe\\MFR\\init' );
 
 
 
@@ -93,11 +93,11 @@ add_action( 'plugins_loaded', 'Pangolin\\WPR\\init' );
 function widget_init() {
 	return register_widget( new Widget );
 }
-add_action( 'widgets_init', 'Pangolin\\WPR\\widget_init' );
+add_action( 'widgets_init', 'Kisboe\\MFR\\widget_init' );
 
 /**
  * Register activation and deactivation hooks
  */
-register_activation_hook( __FILE__, array( 'Pangolin\\WPR\\Plugin', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'Pangolin\\WPR\\Plugin', 'deactivate' ) );
+register_activation_hook( __FILE__, array( 'Kisboe\\MFR\\Plugin', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'Kisboe\\MFR\\Plugin', 'deactivate' ) );
 

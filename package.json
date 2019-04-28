@@ -1,5 +1,5 @@
 {
-  "name": "wp-reactivate",
+  "name": "mfpress",
   "version": "1.0.2",
   "description": "React boilerplate for WordPress plugins",
   "main": "index.js",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gopangolin/wp-reactivate.git"
+    "url": "git@github.com:Kisboe/madridfelina-plugins.git"
   },
   "keywords": [
     "wordpress",
@@ -18,12 +18,8 @@
     "plugin",
     "webpack"
   ],
-  "author": "Pangolin",
+  "author": "Kisboe",
   "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/gopangolin/wp-reactivate/issues"
-  },
-  "homepage": "https://github.com/gopangolin/wp-reactivate#readme",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "isomorphic-fetch": "^2.2.1",

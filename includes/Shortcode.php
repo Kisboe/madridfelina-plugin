@@ -1,16 +1,16 @@
 <?php
 /**
- * WP-Reactivate
+ * MF-Press
  *
  *
- * @package   WP-Reactivate
- * @author    Pangolin
+ * @package   MF-Press
+ * @author    Kisboe
  * @license   GPL-3.0
  * @link      https://gopangolin.com
- * @copyright 2017 Pangolin (Pty) Ltd
+ * @copyright 2017 Kisboe (Pty) Ltd
  */
 
-namespace Pangolin\WPR;
+namespace Kisboe\MFR;
 
 /**
  * @subpackage Shortcode
@@ -55,7 +55,7 @@ class Shortcode {
 		$this->plugin_slug = $plugin->get_plugin_slug();
 		$this->version = $plugin->get_plugin_version();
 
-		add_shortcode( 'wp-reactivate', array( $this, 'shortcode' ) );
+		add_shortcode( 'mfpress', array( $this, 'shortcode' ) );
 	}
 
 
@@ -88,11 +88,11 @@ class Shortcode {
 			'title'       => 'Hello world',
 			'api_nonce'   => wp_create_nonce( 'wp_rest' ),
 			'api_url'	  => rest_url( $this->plugin_slug . '/v1/' ),
-		), $atts, 'wp-reactivate' );
+		), $atts, 'mfpress' );
 
 		wp_localize_script( $this->plugin_slug . '-shortcode-script', $object_name, $object );
 
-		$shortcode = '<div class="wp-reactivate-shortcode" data-object-id="' . $object_name . '"></div>';
+		$shortcode = '<div class="mfpress-shortcode" data-object-id="' . $object_name . '"></div>';
 		return $shortcode;
 	}
 }

@@ -1,36 +1,42 @@
 ![alt-text](https://cloud.githubusercontent.com/assets/1805604/26199709/55c91bda-3bcb-11e7-871e-94b7a022cfa9.jpg "WP Reactivate - WordPress React Boilerplate")
+
 # WP Reactivate
+
 WP Reactivate is a React boilerplate built specifically for WordPress, allowing you to quickly and easily integrate React into your WordPress plugins.
 
 <!-- TOC -->
 
-- [WP Reactivate](#wp-reactivate)
-    - [Setup and installation](#setup-and-installation)
-    - [Usage](#usage)
-    - [Quick Start](#quick-start)
-        - [Introduction](#introduction)
-        - [Using the Shortcode](#using-the-shortcode)
-        - [Using the Widget](#using-the-widget)
-        - [Using REST Controllers](#using-rest-controllers)
-        - [Using the Settings Page](#using-the-settings-page)
-        - [Using fetchWP](#using-fetchwp)
-    - [Technologies](#technologies)
-    - [Tutorials](#tutorials)
-    - [Credits](#credits)
+- [WP Reactivate](#mfpress)
+  - [Setup and installation](#setup-and-installation)
+  - [Usage](#usage)
+  - [Quick Start](#quick-start)
+    - [Introduction](#introduction)
+    - [Using the Shortcode](#using-the-shortcode)
+    - [Using the Widget](#using-the-widget)
+    - [Using REST Controllers](#using-rest-controllers)
+    - [Using the Settings Page](#using-the-settings-page)
+    - [Using fetchWP](#using-fetchwp)
+  - [Technologies](#technologies)
+  - [Tutorials](#tutorials)
+  - [Credits](#credits)
 
 <!-- /TOC -->
 
 ## Setup and installation
-* **Install [Node 8.12.0 LTS or greater](https://nodejs.org)**
-* **Install [Yarn](https://yarnpkg.com/en/docs/install)** (Or use npm if you prefer)
+
+- **Install [Node 8.12.0 LTS or greater](https://nodejs.org)**
+- **Install [Yarn](https://yarnpkg.com/en/docs/install)** (Or use npm if you prefer)
 
 ## Usage
-* Install required modules: `yarn` (or `npm install`)
-* Build development version of app and watch for changes: `yarn build` (or `npm run build`)
-* Build production version of app:`yarn prod` (or `npm run prod`)
+
+- Install required modules: `yarn` (or `npm install`)
+- Build development version of app and watch for changes: `yarn build` (or `npm run build`)
+- Build production version of app:`yarn prod` (or `npm run prod`)
 
 ## Quick Start
+
 ### Introduction
+
 This boilerplate plugin provides three different WordPress views in which an independant React app can be rendered:
 
 - Shortcode
@@ -39,7 +45,8 @@ This boilerplate plugin provides three different WordPress views in which an ind
 
 Each JavaScript root file will correspond to the independant React app to be bundled by Webpack.
 
-*webpack.config.js*
+_webpack.config.js_
+
 ```javascript =6
 entry: {
   'js/admin': path.resolve(__dirname, 'app/admin.js'),
@@ -47,11 +54,13 @@ entry: {
   'js/widget': path.resolve(__dirname, 'app/widget.js'),
 },
 ```
-  
-### Using the Shortcode
-In order to get the shortcode attributes into our Javascript we need to pass them to an object which will be made available to the *shortcode.js* app via ```wp_localize_script```. Be careful with the security of data you pass here as this will be output in a ```<script>``` tag in the rendered html.
 
-*includes/Shortcode.php*
+### Using the Shortcode
+
+In order to get the shortcode attributes into our Javascript we need to pass them to an object which will be made available to the _shortcode.js_ app via `wp_localize_script`. Be careful with the security of data you pass here as this will be output in a `<script>` tag in the rendered html.
+
+_includes/Shortcode.php_
+
 ```php =81
 public function shortcode( $atts ) {
   wp_enqueue_script( $this->plugin_slug . '-shortcode-script' );
@@ -62,21 +71,22 @@ public function shortcode( $atts ) {
   $object = shortcode_atts( array(
     'title'       => 'Hello world',
     'api_nonce'   => wp_create_nonce( 'wp_rest' ),
-    'api_url'	  => rest_url( 'wp-reactivate/v1/' ),
-  ), $atts, 'wp-reactivate' );
+    'api_url'	  => rest_url( 'mfpress/v1/' ),
+  ), $atts, 'mfpress' );
 
   wp_localize_script( $this->plugin_slug . '-shortcode-script', $object_name, $object );
 
-  $shortcode = '<div class="wp-reactivate-shortcode" data-object-id="' . $object_name . '"></div>';
+  $shortcode = '<div class="mfpress-shortcode" data-object-id="' . $object_name . '"></div>';
   return $shortcode;
 }
 ```
 
-You can access the shortcode attributes via the ```wpObject``` prop which is passed into your React container component.
+You can access the shortcode attributes via the `wpObject` prop which is passed into your React container component.
 
-*app/containers/Shortcode.jsx* 
+_app/containers/Shortcode.jsx_
+
 ```javascript =1
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 export default class Shortcode extends Component {
   render() {
@@ -91,10 +101,11 @@ export default class Shortcode extends Component {
 ```
 
 ### Using the Widget
-In order to get the widget options into our Javascript we need to pass them to an object which will be made available to the *widget.js* app via ```wp_localize_script```. Be careful with the security of data you pass here as this will be output in a ```<script>``` tag in the rendered html.
 
+In order to get the widget options into our Javascript we need to pass them to an object which will be made available to the _widget.js_ app via `wp_localize_script`. Be careful with the security of data you pass here as this will be output in a `<script>` tag in the rendered html.
 
-*includes/Widget.php*
+_includes/Widget.php_
+
 ```php =43
 public function widget( $args, $instance ) {
   wp_enqueue_script( $this->plugin_slug . '-widget-script', plugins_url( 'assets/js/widget.js', dirname( __FILE__ ) ), array( 'jquery' ), $this->version );
@@ -105,23 +116,25 @@ public function widget( $args, $instance ) {
   $object = array(
     'title'       => $instance['title'],
     'api_nonce'   => wp_create_nonce( 'wp_rest' ),
-    'api_url'	  => rest_url( 'wp-reactivate/v1/' ),
+    'api_url'	  => rest_url( 'mfpress/v1/' ),
   );
 
   wp_localize_script( $this->plugin_slug . '-widget-script', $object_name, $object );
 
   echo $args['before_widget'];
 
-  ?><div class="wp-reactivate-widget" data-object-id="<?php echo $object_name ?>"></div><?php
+  ?><div class="mfpress-widget" data-object-id="<?php echo $object_name ?>"></div><?php
 
   echo $args['after_widget'];
 }
 ```
-You can access the widget options via the ```wpObject``` prop which is passed into your React container component.
 
-*app/containers/Widget.jsx* 
+You can access the widget options via the `wpObject` prop which is passed into your React container component.
+
+_app/containers/Widget.jsx_
+
 ```javascript =1
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 export default class Widget extends Component {
   render() {
@@ -133,28 +146,27 @@ export default class Widget extends Component {
     );
   }
 }
-
 ```
 
 ### Using REST Controllers
 
-We have included a single base REST controller class in the plugin. You will need to use this controller to create endpoints to interact with your React components. Depending on the complexity of your plugin you may need to have multiple controllers or may want to extend default WordPress REST API endpoints. 
+We have included a single base REST controller class in the plugin. You will need to use this controller to create endpoints to interact with your React components. Depending on the complexity of your plugin you may need to have multiple controllers or may want to extend default WordPress REST API endpoints.
 
 We have chosen the custom controller approach for its control and flexibility. Please see the WordPress developer documentation on adding [custom endpoints](https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/) and specifically the [controller pattern](https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/#the-controller-pattern) to familiarise your with our choice of implementation.
 
 It is important to become well versed in using the [WordPress REST API](https://developer.wordpress.org/rest-api/) as this is how you will be passing data to and from your React applications.
-### Using the Settings Page
-In our admin class we add a sub menu page to the Settings menu using ```add_options_page``` and render the React Admin container onto the root DOM node.
 
-*includes/Admin.php*
-``` php =163
+### Using the Settings Page
+
+In our admin class we add a sub menu page to the Settings menu using `add_options_page` and render the React Admin container onto the root DOM node.
+
+_includes/Admin.php_
+
+```php =163
 public function display_plugin_admin_page() {
- ?><div id="wp-reactivate-admin"></div><?php
+ ?><div id="mfpress-admin"></div><?php
 }
 ```
-
-
-
 
 ### Using fetchWP
 
@@ -164,7 +176,8 @@ In the React container component we show how to retrieve and update this setting
 
 First we initialise fetchWP in the ES6 class constructor of our container component. It requires two parameters being the REST URL and the REST nonce which can be supplied from our wpObject.
 
-*app/containers/Admin.jsx*
+_app/containers/Admin.jsx_
+
 ```javascript =7
   constructor(props) {
     super(props);
@@ -184,29 +197,31 @@ First we initialise fetchWP in the ES6 class constructor of our container compon
 
 In the getSetting call you can now see how we use the utility to perform a GET request on the 'example' endpoint.
 
-*app/containers/Admin.jsx*
+_app/containers/Admin.jsx_
+
 ```javascript =22
-  getSetting = () => {
-    this.fetchWP.get( 'example' )
-    .then(
-      (json) => this.setState({
+getSetting = () => {
+  this.fetchWP.get("example").then(
+    json =>
+      this.setState({
         example_setting: json.value,
         saved_example_setting: json.value
       }),
-      (err) => console.log( 'error', err )
-    );
-  };
+    err => console.log("error", err)
+  );
+};
 ```
 
 We have found this utility covers most of our use cases. If you are looking for something more full featured (especially if you are working with standard WP endpoints) then have a look at [node-wpapi](http://wp-api.org/node-wpapi/).
 
 ## Technologies
-| **Tech** | **Description** |
-|----------|-------|
-|  [React](https://facebook.github.io/react/)  |   A JavaScript library for building user interfaces. |
-|  [Babel](http://babeljs.io) |  Compiles next generation JS features to ES5. Enjoy the new version of JavaScript, today. |
-| [Webpack](http://webpack.js.org) | For bundling our JavaScript assets. |
-| [ESLint](http://eslint.org/)| Pluggable linting utility for JavaScript and JSX  |
+
+| **Tech**                                   | **Description**                                                                          |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| [React](https://facebook.github.io/react/) | A JavaScript library for building user interfaces.                                       |
+| [Babel](http://babeljs.io)                 | Compiles next generation JS features to ES5. Enjoy the new version of JavaScript, today. |
+| [Webpack](http://webpack.js.org)           | For bundling our JavaScript assets.                                                      |
+| [ESLint](http://eslint.org/)               | Pluggable linting utility for JavaScript and JSX                                         |
 
 The boilerplate has been updated to use PHP **namespaces and autoloading**. Please see Tom McFarlin's [article](https://tommcfarlin.com/namespaces-and-autoloading-2017/) on the subject if you are not familiar.
 
@@ -215,4 +230,5 @@ The boilerplate has been updated to use PHP **namespaces and autoloading**. Plea
 Building a WordPress plugin with React - [Part 1](https://gopangolin.com/building-wordpress-plugin-with-react-part-1/), [Part 2](https://gopangolin.com/building-wordpress-plugin-with-react-part-2/)
 
 ## Credits
-*Made by [Pangolin](https://gopangolin.com)*
+
+_Made by [Kisboe](https://gopangolin.com)_

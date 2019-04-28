@@ -1,16 +1,16 @@
 <?php
 /**
- * WP-Reactivate
+ * MF-Press
  *
  *
- * @package   WP-Reactivate
- * @author    Pangolin
+ * @package   MF-Press
+ * @author    Kisboe
  * @license   GPL-3.0
  * @link      https://gopangolin.com
- * @copyright 2017 Pangolin (Pty) Ltd
+ * @copyright 2017 Kisboe (Pty) Ltd
  */
 
-namespace Pangolin\WPR;
+namespace Kisboe\MFR;
 
 /**
  * @subpackage Plugin
@@ -26,7 +26,7 @@ class Plugin {
 	 *
 	 * @var      string
 	 */
-	protected $plugin_slug = 'wp-reactivate';
+	protected $plugin_slug = 'mfpress';
 
 	/**
 	 * Instance of this class.

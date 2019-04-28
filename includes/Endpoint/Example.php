@@ -1,17 +1,17 @@
 <?php
 /**
- * WP-Reactivate
+ * MF-Press
  *
  *
- * @package   WP-Reactivate
- * @author    Pangolin
+ * @package   MF-Press
+ * @author    Kisboe
  * @license   GPL-3.0
  * @link      https://gopangolin.com
- * @copyright 2017 Pangolin (Pty) Ltd
+ * @copyright 2017 Kisboe (Pty) Ltd
  */
 
-namespace Pangolin\WPR\Endpoint;
-use Pangolin\WPR;
+namespace Kisboe\MFR\Endpoint;
+use Kisboe\MFR;
 
 /**
  * @subpackage REST_Controller
@@ -33,7 +33,7 @@ class Example {
 	 * @since     0.8.1
 	 */
 	private function __construct() {
-        $plugin = WPR\Plugin::get_instance();
+        $plugin = MFR\Plugin::get_instance();
 		$this->plugin_slug = $plugin->get_plugin_slug();
 	}
 
